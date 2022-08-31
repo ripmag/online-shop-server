@@ -1,7 +1,19 @@
-const exprees = require('express')
+require('dotenv').config()
+const express = require('express')
+const sequelize = require('./database')
+const PORT = process.env.PORT
 
-const PORT = 5000
+const app = express()
 
-const app = exprees()
+const start = async () => {
+    try {
+        await sequelize.authenticate()
+        await sequelize.sync()
+        app.listen(PORT,()=> console.log('Server started on port',PORT)) 
+    }
+    catch (err){
+        console.log(err)
+    }
+}
 
-app.listen(PORT,()=> console.log('Server started on port ${5000}'))
+start()
