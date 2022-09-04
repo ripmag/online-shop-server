@@ -7,13 +7,14 @@ module.exports = function (role) {
         }
         try {
             const token = req.headers.authorization.split(' ')[1] //0 - тип токена(Bearer) через пробел сам токен в 1
+
             if (!token) {
                 return res.status(401).json({ message: "Пользователь не авторизован" })
             }
 
             const decoded = jwt.verify(token, process.env.SECRET_KEY)
             req.user = decoded
-            if (decoded.role !== role) {
+            if (decoded.email.role !== role) {                
                 return res.status(403).json({ message: "Нет доступа" })
             }
             next()
