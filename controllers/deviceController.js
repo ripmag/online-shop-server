@@ -50,7 +50,7 @@ class DeviceController {
         if (brandId && !typeId) { //если указана фирма
             devices = await Device.findAndCountAll({where:{brandId}, limit, offset})
         }
-        if (typeId && !typeId) {
+        if (typeId && !brandId) {
             devices = await Device.findAndCountAll({where:{typeId}, limit, offset})
         }
         if (typeId && brandId) {
